@@ -1,6 +1,6 @@
 # BP: Simulador Banco Imobiliário (simplificado)
 
-Este projeto implementa uma HTTP API em FastAPI para simular uma partida do jogo descrito no desafio.
+Este projeto implementa uma HTTP API em FastAPI para simular uma partida do jogo descrito no desafio.  
 Outras *features* foram implementadas para incrementar o desafio :)
 
 ## Decisões
@@ -52,7 +52,7 @@ GET http://localhost:8080/jogo/simular
 Exemplo com seed:
 
 ```http
-GET http://localhost:8080/jogo/simular?seed=42
+GET http://localhost:8080/jogo/simular?seed=87
 ```
 
 Resposta esperada:
@@ -71,4 +71,4 @@ GET http://localhost:8080/docs
 ```
 
 ---
-Pedro Hirschle — software engineer, 2026.
+*Pedro Hirschle — software engineer, 2026.*
