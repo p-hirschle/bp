@@ -41,6 +41,12 @@ class GameResult:
     turns_played: int
 
 
+@dataclass(frozen=True)
+class StatisticsResult:
+    biggest_winner: str
+    win_percentage_by_player: dict[str, str]
+
+
 def default_properties() -> list[Property]:
     """
     Valores de compra e aluguel definidos 
@@ -200,3 +206,34 @@ def simulate_game(seed: int | None = None) -> GameResult:
     Roda o jogo :)
     """
     return Game(seed=seed).play()
+
+
+def simulate_statistics(total_games: int, seed: int | None = None) -> StatisticsResult:
+    """
+    Roda varios jogos completos e calcula a porcentagem de vitoria por estilo.
+    """
+    if total_games <= 0:
+        raise ValueError("total_games deve ser maior que zero")
+
+    rng = Random(seed)
+    victories = {player_name: 0 for player_name in PLAYER_NAMES}
+
+    for _ in range(total_games):
+        game_seed = rng.randint(1, 1_000_000_000)
+        result = simulate_game(seed=game_seed)
+        victories[result.winner] += 1
+
+    ranked_players = sorted(
+        PLAYER_NAMES,
+        key=lambda player_name: (-victories[player_name], PLAYER_NAMES.index(player_name)),
+    )
+    biggest_winner = ranked_players[0]
+    win_percentage_by_player = {
+        player_name: f"{round((victories[player_name] / total_games) * 100)}%"
+        for player_name in ranked_players
+    }
+
+    return StatisticsResult(
+        biggest_winner=biggest_winner,
+        win_percentage_by_player=win_percentage_by_player,
+    )

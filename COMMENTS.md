@@ -36,6 +36,7 @@ Em caso de empate, o desempate segue a ordem de turno definida no início da par
 - Em caso de empate por saldo, vence quem aparece antes na ordem de turno sorteada.
 - Ao ficar com saldo negativo, o jogador é eliminado e todas as suas propriedades ficam sem dono.
 - O *endpoint* aceita um parâmetro opcional `seed` para reproduzir uma simulação específica e movimentar o fator de aleatoriedade.
+- O *endpoint* de estatísticas executa `n` jogos completos e calcula a porcentagem de vitórias por estilo de jogador.
 
 ## Requisitos
 
@@ -92,5 +93,27 @@ Resposta esperada:
 {
   "vencedor": "cauteloso",
   "jogadores": ["cauteloso", "aleatorio", "exigente", "impulsivo"]
+}
+```
+
+Endpoint de estatísticas:
+
+```http
+GET http://localhost:8080/jogo/simular_e_estatistica?n=100
+```
+
+O parâmetro `n` é obrigatório e representa a quantidade de jogos completos que serão simulados.
+
+Resposta esperada:
+
+```json
+{
+  "maior_vencedor": "cauteloso",
+  "porcentagem_vitoria_por_jogador": {
+    "impulsivo": "24%",
+    "exigente": "25%",
+    "cauteloso": "26%",
+    "aleatorio": "25%"
+  }
 }
 ```
