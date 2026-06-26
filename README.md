@@ -102,5 +102,59 @@ Você também pode simplesmente acessar a documentação e testar de forma mais 
 GET http://localhost:8080/docs
 ```
 
+## Bônus
+
+Foram implementadas rotas personalizadas para agregar o conteúdo do desafio:
+1- Rota GET para retornar as informações detalhadas das 20 propriedades do jogo;
+2- Rota GET que roda o jogo normalmente, porém retorna também metadados da partida #todo;
+3- Rota GET que roda o jogo N vezes e retorna estatística de vitória para cada tipo de jogador.
+
+Endpoint de estatísticas:
+
+```http
+GET http://localhost:8080/jogo/simular_e_estatistica?n=100
+```
+
+O parâmetro `n` é obrigatório e representa a quantidade de jogos completos que serão simulados.
+
+Exemplo de esposta esperada:
+
+```json
+{
+  "maior_vencedor": "cauteloso",
+  "porcentagem_vitoria_por_jogador": {
+    "impulsivo": "24%",
+    "exigente": "25%",
+    "cauteloso": "26%",
+    "aleatorio": "25%"
+  }
+}
+```
+
+Endpoint de propriedades:
+
+```http
+GET http://localhost:8080/jogo/propriedades
+```
+
+Resposta esperada:
+
+```json
+[
+  {
+    "posicao": 1,
+    "valor_venda": 60,
+    "aluguel": 10
+  },
+
+  ...
+
+  {
+    "posicao": 20,
+    "valor_venda": 350,
+    "aluguel": 120
+  }
+]
+
 ---
 *Pedro Hirschle — software engineer, 2026.*

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
-from app.game import simulate_game, simulate_statistics
+from app.game import default_properties, simulate_game, simulate_statistics
 
 
 app = FastAPI(
@@ -18,6 +18,12 @@ class SimulationResponse(BaseModel):
 class StatisticsResponse(BaseModel):
     maior_vencedor: str
     porcentagem_vitoria_por_jogador: dict[str, str]
+
+
+class PropertyResponse(BaseModel):
+    posicao: int
+    valor_venda: int
+    aluguel: int
 
 
 @app.get("/jogo/simular", response_model=SimulationResponse)
@@ -39,6 +45,18 @@ def simulate_and_calculate_statistics(
         maior_vencedor=result.biggest_winner,
         porcentagem_vitoria_por_jogador=result.win_percentage_by_player,
     )
+
+
+@app.get("/jogo/propriedades", response_model=list[PropertyResponse])
+def get_properties() -> list[PropertyResponse]:
+    return [
+        PropertyResponse(
+            posicao=property_.position + 1, # normalizar humanamente o conceito de posição de tabuleiro
+            valor_venda=property_.sale_price,
+            aluguel=property_.rent,
+        )
+        for property_ in default_properties()
+    ]
 
 
 @app.get("/health")

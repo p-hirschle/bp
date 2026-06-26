@@ -1,6 +1,6 @@
 # BP: Simulador Banco Imobiliário (simplificado)
 
-Este projeto implementa uma HTTP API em FastAPI para simular uma partida do jogo descrito no desafio.
+Este projeto implementa uma HTTP API em FastAPI/Python para simular uma partida do jogo descrito no desafio.  
 Outras *features* foram implementadas para incrementar o desafio :)
 
 ## Sobre o jogo
@@ -30,13 +30,13 @@ Em caso de empate, o desempate segue a ordem de turno definida no início da par
 
 ## Decisões
 
-- Como o enunciado não fornece a tabela de custos e alugueis das 20 propriedades, foi definida uma lista de tuplas (compra/aluguel) fixa no codigo em `app/game.py`.
+- Como o enunciado não fornece a tabela de custos e aluguéis das 20 propriedades, foi   
+definida uma lista de tuplas (compra/aluguel) fixa no código em `app/game.py`.
 - O limite de 1000 rodadas foi interpretado como 1000 turnos individuais de jogadores.
-- A ordem de turno dos jogadores é sorteada no inicio da partida.
+- A ordem de turno dos jogadores é sorteada no início da partida.
 - Em caso de empate por saldo, vence quem aparece antes na ordem de turno sorteada.
 - Ao ficar com saldo negativo, o jogador é eliminado e todas as suas propriedades ficam sem dono.
 - O *endpoint* aceita um parâmetro opcional `seed` para reproduzir uma simulação específica e movimentar o fator de aleatoriedade.
-- O *endpoint* de estatísticas executa `n` jogos completos e calcula a porcentagem de vitórias por estilo de jogador.
 
 ## Requisitos
 
@@ -44,9 +44,9 @@ Em caso de empate, o desempate segue a ordem de turno definida no início da par
 - pip instalado e atualizado
 - Poetry (opcional)
 
-## Como executar
+## Como executar/rodar
 
-Instale as dependencias com Poetry:
+Instale as dependências com Poetry (recomendado):
 
 ```bash
 poetry install
@@ -58,7 +58,7 @@ Inicie a API com Poetry:
 poetry run uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
 ```
 
-Caso nao tenha Poetry instalado, use o `requirements.txt`:
+Caso não possua o Poetry instalado, use o `requirements.txt`:
 
 ```bash
 python -m venv .venv
@@ -84,7 +84,7 @@ GET http://localhost:8080/jogo/simular
 Exemplo com seed:
 
 ```http
-GET http://localhost:8080/jogo/simular?seed=42
+GET http://localhost:8080/jogo/simular?seed=87
 ```
 
 Resposta esperada:
@@ -96,6 +96,19 @@ Resposta esperada:
 }
 ```
 
+Você também pode simplesmente acessar a documentação e testar de forma mais interativa:  
+
+```http
+GET http://localhost:8080/docs
+```
+
+## Bônus
+
+Foram implementadas rotas personalizadas para agregar o conteúdo do desafio:
+1- Rota GET para retornar as informações detalhadas das 20 propriedades do jogo;
+2- Rota GET que roda o jogo normalmente, porém retorna também metadados da partida #todo;
+3- Rota GET que roda o jogo N vezes e retorna estatística de vitória para cada tipo de jogador.
+
 Endpoint de estatísticas:
 
 ```http
@@ -104,7 +117,7 @@ GET http://localhost:8080/jogo/simular_e_estatistica?n=100
 
 O parâmetro `n` é obrigatório e representa a quantidade de jogos completos que serão simulados.
 
-Resposta esperada:
+Exemplo de esposta esperada:
 
 ```json
 {
@@ -117,3 +130,31 @@ Resposta esperada:
   }
 }
 ```
+
+Endpoint de propriedades:
+
+```http
+GET http://localhost:8080/jogo/propriedades
+```
+
+Resposta esperada:
+
+```json
+[
+  {
+    "posicao": 1,
+    "valor_venda": 60,
+    "aluguel": 10
+  },
+
+  ...
+
+  {
+    "posicao": 20,
+    "valor_venda": 350,
+    "aluguel": 120
+  }
+]
+
+---
+*Pedro Hirschle — software engineer, 2026.*
