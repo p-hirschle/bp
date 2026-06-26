@@ -172,7 +172,7 @@ GET http://localhost:8080/jogo/simular_e_estatistica?n=100
 
 O parâmetro `n` é obrigatório e representa a quantidade de jogos completos que serão simulados.
 
-Exemplo de esposta esperada:
+Exemplo de resposta esperada:
 
 ```json
 {
