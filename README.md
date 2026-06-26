@@ -1,11 +1,37 @@
 # BP: Simulador Banco Imobiliário (simplificado)
 
-Este projeto implementa uma HTTP API em FastAPI para simular uma partida do jogo descrito no desafio.  
+Este projeto implementa uma HTTP API em FastAPI/Python para simular uma partida do jogo descrito no desafio.  
 Outras *features* foram implementadas para incrementar o desafio :)
+
+## Sobre o jogo
+
+O jogo simulado é uma versão simplificada de Banco Imobiliário.  
+A partida acontece com quatro jogadores, cada um com saldo inicial de 300, e a ordem de turno é definida aleatoriamente no início.
+
+O tabuleiro possui 20 propriedades em sequência. Cada propriedade tem um valor de venda, um valor de aluguel e pode ou não ter um proprietário.
+
+Em sua vez, o jogador lança um dado de 6 faces e avança pelo tabuleiro. Ao completar uma volta, recebe 100 de saldo.    
+
+Se cair em uma propriedade sem dono, pode comprá-la caso tenha saldo suficiente e sua estratégia permita.     
+Se cair em uma propriedade com dono, paga o aluguel ao proprietário.
+
+Cada jogador segue uma estratégia de compra:
+
+- `impulsivo`: compra qualquer propriedade disponível em que parar.
+- `exigente`: compra apenas propriedades com aluguel maior que 50.
+- `cauteloso`: compra apenas se ainda ficar com pelo menos 80 de saldo após a compra.
+- `aleatorio`: compra com probabilidade de 50%.
+
+Um jogador é eliminado quando fica com saldo negativo. Ao ser eliminado, deixa de jogar e todas as suas propriedades ficam novamente disponíveis para compra.
+
+A partida termina quando resta apenas um jogador ativo. Caso isso não aconteça até a milésima rodada, vence o jogador com maior saldo.   
+
+Em caso de empate, o desempate segue a ordem de turno definida no início da partida.
 
 ## Decisões
 
-- Como o enunciado não fornece a tabela de custos e aluguéis das 20 propriedades, foi definida uma lista fixa no código em `app/game.py`.
+- Como o enunciado não fornece a tabela de custos e aluguéis das 20 propriedades, foi   
+definida uma lista de tuplas (compra/aluguel) fixa no código em `app/game.py`.
 - O limite de 1000 rodadas foi interpretado como 1000 turnos individuais de jogadores.
 - A ordem de turno dos jogadores é sorteada no início da partida.
 - Em caso de empate por saldo, vence quem aparece antes na ordem de turno sorteada.
