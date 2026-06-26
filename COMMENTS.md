@@ -37,6 +37,12 @@ Em caso de empate, o desempate segue a ordem de turno definida no início da par
 - Ao ficar com saldo negativo, o jogador é eliminado e todas as suas propriedades ficam sem dono.
 - O *endpoint* aceita um parâmetro opcional `seed` para reproduzir uma simulação específica e movimentar o fator de aleatoriedade.
 
+## Requisitos
+
+- Python 3.11+
+- pip instalado e atualizado
+- Poetry (opcional)
+
 ## Como executar
 
 Instale as dependencias com Poetry:
