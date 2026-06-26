@@ -91,8 +91,13 @@ Resposta esperada:
 
 ```json
 {
-  "vencedor": "cauteloso",
-  "jogadores": ["cauteloso", "aleatorio", "exigente", "impulsivo"]
+  "vencedor": "aleatorio",
+  "jogadores": [
+    "aleatorio",
+    "exigente",
+    "impulsivo",
+    "cauteloso"
+  ]
 }
 ```
 
