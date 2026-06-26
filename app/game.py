@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from random import Random
+from typing import Callable
 
 
 INITIAL_BALANCE = 300
@@ -80,21 +81,42 @@ def default_properties() -> list[Property]:
     ]
 
 
+BuyStrategy = Callable[[Player, Property, Random], bool]
+
+
+def impulsive_strategy(player: Player, property_: Property, rng: Random) -> bool:
+    return True
+
+
+def demanding_strategy(player: Player, property_: Property, rng: Random) -> bool:
+    return property_.rent > 50
+
+
+def cautious_strategy(player: Player, property_: Property, rng: Random) -> bool:
+    return player.balance - property_.sale_price >= 80
+
+
+def random_strategy(player: Player, property_: Property, rng: Random) -> bool:
+    return rng.random() < 0.5
+
+
+BUY_STRATEGIES: dict[str, BuyStrategy] = {
+    IMPULSIVE: impulsive_strategy,
+    DEMANDING: demanding_strategy,
+    CAUTIOUS: cautious_strategy,
+    RANDOM: random_strategy,
+}
+
+
 def wants_to_buy(player: Player, property_: Property, rng: Random) -> bool:
     """
     Critério de compra baseado na personalidade de cada tipo de jogador.
     """
     if player.balance < property_.sale_price:
         return False
-    if player.name == IMPULSIVE:
-        return True
-    if player.name == DEMANDING:
-        return property_.rent > 50
-    if player.name == CAUTIOUS:
-        return player.balance - property_.sale_price >= 80
-    if player.name == RANDOM:
-        return rng.random() < 0.5
-    return False
+
+    strategy = BUY_STRATEGIES.get(player.name)
+    return strategy(player, property_, rng) if strategy else False
 
 
 class Game:
