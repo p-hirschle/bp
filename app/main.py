@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
 
-from app.game import default_properties, simulate_game, simulate_statistics
+from app.game import MAX_TURNS, default_properties, simulate_game, simulate_statistics
 
 
 app = FastAPI(
@@ -13,6 +13,18 @@ app = FastAPI(
 class SimulationResponse(BaseModel):
     vencedor: str
     jogadores: list[str]
+
+
+class SimulationMetadata(BaseModel):
+    turnos_jogados: int
+    limite_turnos: int
+    limite_turnos_atingido: bool
+
+
+class SimulationWithMetadataResponse(BaseModel):
+    vencedor: str
+    jogadores: list[str]
+    metadados: SimulationMetadata
 
 
 class StatisticsResponse(BaseModel):
@@ -32,6 +44,22 @@ def simulate(seed: int | None = Query(default=None)) -> SimulationResponse:
     return SimulationResponse(
         vencedor=result.winner,
         jogadores=result.players_by_balance,
+    )
+
+
+@app.get("/jogo/simular_com_metadados", response_model=SimulationWithMetadataResponse)
+def simulate_with_metadata(
+    seed: int | None = Query(default=None),
+) -> SimulationWithMetadataResponse:
+    result = simulate_game(seed=seed)
+    return SimulationWithMetadataResponse(
+        vencedor=result.winner,
+        jogadores=result.players_by_balance,
+        metadados=SimulationMetadata(
+            turnos_jogados=result.turns_played,
+            limite_turnos=MAX_TURNS,
+            limite_turnos_atingido=result.turns_played >= MAX_TURNS,
+        ),
     )
 
 

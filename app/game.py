@@ -186,7 +186,7 @@ class Game:
 
     def eliminate(self, player: Player) -> None:
         """
-        Elimine um jogador e 'solta' suas propriedades.
+        Elimina um jogador e 'solta' suas propriedades.
         """
         player.active = False
         for property_ in self.properties:
@@ -210,10 +210,10 @@ def simulate_game(seed: int | None = None) -> GameResult:
 
 def simulate_statistics(total_games: int, seed: int | None = None) -> StatisticsResult:
     """
-    Roda varios jogos completos e calcula a porcentagem de vitoria por estilo.
+    Roda vários jogos completos e calcula a porcentagem de vitória por estilo de jogador.
     """
     if total_games <= 0:
-        raise ValueError("total_games deve ser maior que zero")
+        raise ValueError("O número de jogos completos deve ser maior que zero")
 
     rng = Random(seed)
     victories = {player_name: 0 for player_name in PLAYER_NAMES}
