@@ -176,12 +176,12 @@ Exemplo de resposta esperada:
 
 ```json
 {
-  "maior_vencedor": "cauteloso",
+  "maior_vencedor": "exigente",
   "porcentagem_vitoria_por_jogador": {
-    "impulsivo": "24%",
-    "exigente": "25%",
-    "cauteloso": "26%",
-    "aleatorio": "25%"
+    "exigente": "35%",
+    "impulsivo": "30%",
+    "aleatorio": "19%",
+    "cauteloso": "16%"
   }
 }
 ```

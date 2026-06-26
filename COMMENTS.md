@@ -91,8 +91,8 @@ Resposta esperada:
 
 ```json
 {
-  "vencedor": "aleatorio",
-  "jogadores": ["aleatorio", "exigente", "impulsivo", "cauteloso"]
+  "vencedor": "cauteloso",
+  "jogadores": ["cauteloso", "aleatorio", "exigente", "impulsivo"]
 }
 ```
 
@@ -172,16 +172,16 @@ GET http://localhost:8080/jogo/simular_e_estatistica?n=100
 
 O parâmetro `n` é obrigatório e representa a quantidade de jogos completos que serão simulados.
 
-Exemplo de esposta esperada:
+Exemplo de resposta esperada:
 
 ```json
 {
-  "maior_vencedor": "cauteloso",
+  "maior_vencedor": "exigente",
   "porcentagem_vitoria_por_jogador": {
-    "impulsivo": "24%",
-    "exigente": "25%",
-    "cauteloso": "26%",
-    "aleatorio": "25%"
+    "exigente": "35%",
+    "impulsivo": "30%",
+    "aleatorio": "19%",
+    "cauteloso": "16%"
   }
 }
 ```
