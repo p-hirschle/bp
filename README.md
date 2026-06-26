@@ -105,31 +105,12 @@ GET http://localhost:8080/docs
 ## Bônus
 
 Foram implementadas rotas personalizadas para agregar o conteúdo do desafio:
-1- Rota GET para retornar as informações detalhadas das 20 propriedades do jogo;
-2- Rota GET que roda o jogo normalmente, porém retorna também metadados da partida #todo;
-3- Rota GET que roda o jogo N vezes e retorna estatística de vitória para cada tipo de jogador.
 
-Endpoint de estatísticas:
+1- Rota GET para retornar as informações detalhadas das 20 propriedades do jogo;    
+2- Rota GET que roda o jogo normalmente, porém retorna também metadados da partida;   
+3- Rota GET que roda o jogo N vezes e retorna estatística de vitória para cada tipo de jogador.   
 
-```http
-GET http://localhost:8080/jogo/simular_e_estatistica?n=100
-```
 
-O parâmetro `n` é obrigatório e representa a quantidade de jogos completos que serão simulados.
-
-Exemplo de esposta esperada:
-
-```json
-{
-  "maior_vencedor": "cauteloso",
-  "porcentagem_vitoria_por_jogador": {
-    "impulsivo": "24%",
-    "exigente": "25%",
-    "cauteloso": "26%",
-    "aleatorio": "25%"
-  }
-}
-```
 
 Endpoint de propriedades:
 
@@ -155,6 +136,55 @@ Resposta esperada:
     "aluguel": 120
   }
 ]
+```
+
+Endpoint de simulação com metadados:
+
+```http
+GET http://localhost:8080/jogo/simular_com_metadados
+```
+
+Exemplo com seed:
+
+```http
+GET http://localhost:8080/jogo/simular_com_metadados?seed=87
+```
+
+Exemplo de resposta esperada:
+
+```json
+{
+  "vencedor": "aleatorio",
+  "jogadores": ["aleatorio", "exigente", "impulsivo", "cauteloso"],
+  "metadados": {
+    "turnos_jogados": 295,
+    "limite_turnos": 1000,
+    "limite_turnos_atingido": false
+  }
+}
+```
+
+Endpoint de estatísticas:
+
+```http
+GET http://localhost:8080/jogo/simular_e_estatistica?n=100
+```
+
+O parâmetro `n` é obrigatório e representa a quantidade de jogos completos que serão simulados.
+
+Exemplo de esposta esperada:
+
+```json
+{
+  "maior_vencedor": "cauteloso",
+  "porcentagem_vitoria_por_jogador": {
+    "impulsivo": "24%",
+    "exigente": "25%",
+    "cauteloso": "26%",
+    "aleatorio": "25%"
+  }
+}
+```
 
 ---
 *Pedro Hirschle — software engineer, 2026.*
