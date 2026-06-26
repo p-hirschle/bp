@@ -5,8 +5,8 @@ from app.game import MAX_TURNS, default_properties, simulate_game, simulate_stat
 
 
 app = FastAPI(
-    title="Simulador Banco Imobiliario",
-    version="0.1.0",
+    title="Simulador Banco Imobiliário",
+    version="1.0.0",
 )
 
 
